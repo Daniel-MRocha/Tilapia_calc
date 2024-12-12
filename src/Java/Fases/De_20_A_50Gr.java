@@ -4,15 +4,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class De_5_A_10Gr implements I_logicaDaFase{
+public class De_20_A_50Gr implements I_logicaDaFase{
 
-    private final double pesoIni = 0.005;
-    private final double porcentagemPv = 0.08;
-    private final double tca = 1.0;
+    private final double pesoIni = 0.02;
+    private final double porcentagemPv = 0.045;
+    private final double tca = 1.1;
     private double racaoTotal ;
     private List<Double> racaoDiaria = new ArrayList<>();
     private int dias;
-    private final int refeicoesPorDia = 4;
+    private final int refeicoesPorDia = 3;
     private String racaotipo = "Pellet de 2-3mm 42% de proteína bruta";
 
     DecimalFormat dc = new DecimalFormat("###,##0.000");
@@ -34,12 +34,12 @@ public class De_5_A_10Gr implements I_logicaDaFase{
         StringBuffer resultado = new StringBuffer();
 
         resultado.append("---------------------\n");
-        resultado.append("Alevino de 5 a 10 gramas\n");
+        resultado.append("Juvenil de 20 a 50 gramas\n");
         resultado.append(racaotipo+"\n");
 
         double pesoDinamico = pesoIni;
 
-        while (pesoDinamico<0.01){
+        while (pesoDinamico<0.05){
 
             racaoDiaria.add((pesoDinamico * porcentagemPv)*qtdTilapias);
             racaoTotal += (pesoDinamico * porcentagemPv)*qtdTilapias;
