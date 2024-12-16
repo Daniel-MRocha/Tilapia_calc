@@ -33,7 +33,7 @@ public class De_5_A_10Gr implements I_logicaDaFase{
     public StringBuffer calculo(int qtdTilapias) {
         StringBuffer resultado = new StringBuffer();
 
-        resultado.append("---------------------\n");
+        resultado.append("FASE----------\n");
         resultado.append("Alevino de 5 a 10 gramas\n");
         resultado.append(racaotipo+"\n");
 
@@ -54,7 +54,7 @@ public class De_5_A_10Gr implements I_logicaDaFase{
         resultado.append("Média de ração diária : Kg " +dc.format(mediaDeRacaoDiaria)  + "\n");
         resultado.append("Dividida em "+ refeicoesPorDia + " refeição(ões) de Kg " + dc.format(mediaDeRacaoDiaria/refeicoesPorDia) + "\n");
         resultado.append("Dias : "+dias+"\n");
-        resultado.append("---------------------\n");
+
 
 
 

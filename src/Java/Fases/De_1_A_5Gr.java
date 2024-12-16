@@ -33,7 +33,7 @@ public class De_1_A_5Gr implements I_logicaDaFase{
     public StringBuffer calculo(int qtdTilapias) {
         StringBuffer resultado = new StringBuffer();
 
-        resultado.append("---------------------\n");
+        resultado.append("FASE----------\n");
         resultado.append("Larva de 1 a 5 gramas\n");
         resultado.append(racaotipo+"\n");
 
@@ -50,11 +50,12 @@ public class De_1_A_5Gr implements I_logicaDaFase{
 
         double mediaDeRacaoDiaria = racaoDiaria.stream().mapToDouble(e->e).sum()/dias;
 
+
         resultado.append("Ração total : Kg "+ dc.format(racaoTotal) + "\n");
         resultado.append("Média de ração diária : Kg " +dc.format(mediaDeRacaoDiaria)  + "\n");
         resultado.append("Dividida em "+ refeicoesPorDia + " refeição(ões) de Kg " + dc.format(mediaDeRacaoDiaria/refeicoesPorDia) + "\n");
         resultado.append("Dias : "+dias+"\n");
-        resultado.append("---------------------\n");
+
 
 
 
