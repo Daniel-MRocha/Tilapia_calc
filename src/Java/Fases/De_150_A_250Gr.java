@@ -54,7 +54,7 @@ public class De_150_A_250Gr implements I_logicaDaFase{
         resultado.append("Média de ração diária : Kg " +dc.format(mediaDeRacaoDiaria)  + "\n");
         resultado.append("Dividida em "+ refeicoesPorDia + " refeição(ões) de Kg " + dc.format(mediaDeRacaoDiaria/refeicoesPorDia) + "\n");
         resultado.append("Dias : "+dias+"\n");
-        resultado.append("---------------------\n");
+
 
 
 
