@@ -1,5 +1,6 @@
 package Java;
 
+import Java.EntradaDados.Dados;
 import Java.Fases.*;
 import Java.Racao_Tempo.Util_Racao_Tempo;
 
@@ -7,30 +8,22 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tila_App {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.print("Número de tilápias : ");
-        int qtdTilapias = sc.nextInt();
-        System.out.println("\n");
-        sc.close();
+        Dados dados = new Dados();
 
-        //Buffers para as informações de cada fase
-        StringBuffer larvaBuffer = new StringBuffer();
-        StringBuffer alevino1Buffer = new StringBuffer();
-        StringBuffer alevino2Buffer = new StringBuffer();
-        StringBuffer juvenil1Buffer = new StringBuffer();
-        StringBuffer juvenil2Buffer = new StringBuffer();
-        StringBuffer adulto1Buffer = new StringBuffer();
-        StringBuffer adulto2Buffer = new StringBuffer();
-        StringBuffer adulto3Buffer = new StringBuffer();
-        StringBuffer adulto4Buffer = new StringBuffer();
-        StringBuffer adulto5Buffer = new StringBuffer();
-        StringBuffer adulto6Buffer = new StringBuffer();
+        int qtdTilapias = 0;
+
+        while (qtdTilapias==0) qtdTilapias = dados.qtdTilapias();
+
+
+        List<StringBuffer> bufLista = buffers();
+
 
         //Instâncias de fases
         De_1_A_5Gr larva = new De_1_A_5Gr();
@@ -45,17 +38,17 @@ public class Tila_App {
         De_800_A_1300Gr adulto5 = new De_800_A_1300Gr();
         De_1300_A_1800Gr adulto6 = new De_1300_A_1800Gr();
 
-        larvaBuffer.append(larva.calculo(qtdTilapias));
-        alevino1Buffer.append(alevino1.calculo(qtdTilapias));
-        alevino2Buffer.append(alevino2.calculo(qtdTilapias));
-        juvenil1Buffer.append(juvenil1.calculo(qtdTilapias));
-        juvenil2Buffer.append(juvenil2.calculo(qtdTilapias));
-        adulto1Buffer.append(adulto1.calculo(qtdTilapias));
-        adulto2Buffer.append(adulto2.calculo(qtdTilapias));
-        adulto3Buffer.append(adulto3.calculo(qtdTilapias));
-        adulto4Buffer.append(adulto4.calculo(qtdTilapias));
-        adulto5Buffer.append(adulto5.calculo(qtdTilapias));
-        adulto6Buffer.append(adulto6.calculo(qtdTilapias));
+        bufLista.get(0).append(larva.calculo(qtdTilapias));
+        bufLista.get(1).append(alevino1.calculo(qtdTilapias));
+        bufLista.get(2).append(alevino2.calculo(qtdTilapias));
+        bufLista.get(3).append(juvenil1.calculo(qtdTilapias));
+        bufLista.get(4).append(juvenil2.calculo(qtdTilapias));
+        bufLista.get(5).append(adulto1.calculo(qtdTilapias));
+        bufLista.get(6).append(adulto2.calculo(qtdTilapias));
+        bufLista.get(7).append(adulto3.calculo(qtdTilapias));
+        bufLista.get(8).append(adulto4.calculo(qtdTilapias));
+        bufLista.get(9).append(adulto5.calculo(qtdTilapias));
+        bufLista.get(10).append(adulto6.calculo(qtdTilapias));
 
 
 
@@ -73,43 +66,83 @@ public class Tila_App {
         Util_Racao_Tempo uAdulto6 = new Util_Racao_Tempo("Cocamar aqua rpx4","32% 6mm",74.14,25,adulto6.getRacaoTotal(),uAdulto5.getDataFinalFase(),adulto6.getDias());
 
         //Carregamento dos buffers
-        larvaBuffer.append(uLarva.gastoComRacao(larva.getDias()));
-        alevino1Buffer.append(uAlevino1.gastoComRacao(alevino1.getDias()));
-        alevino2Buffer.append(uAlevino2.gastoComRacao(alevino2.getDias()));
-        juvenil1Buffer.append(uJuvenil1.gastoComRacao(juvenil1.getDias()));
-        juvenil2Buffer.append(uJuvenil2.gastoComRacao(juvenil2.getDias()));
-        adulto1Buffer.append(uAdulto1.gastoComRacao(adulto1.getDias()));
-        adulto2Buffer.append(uAdulto2.gastoComRacao(adulto2.getDias()));
-        adulto3Buffer.append(uAdulto3.gastoComRacao(adulto3.getDias()));
-        adulto4Buffer.append(uAdulto4.gastoComRacao(adulto4.getDias()));
-        adulto5Buffer.append(uAdulto5.gastoComRacao(adulto5.getDias()));
-        adulto6Buffer.append(uAdulto6.gastoComRacao(adulto6.getDias()));
+        bufLista.get(0).append(uLarva.gastoComRacao(larva.getDias()));
+        bufLista.get(1).append(uAlevino1.gastoComRacao(alevino1.getDias()));
+        bufLista.get(2).append(uAlevino2.gastoComRacao(alevino2.getDias()));
+        bufLista.get(3).append(uJuvenil1.gastoComRacao(juvenil1.getDias()));
+        bufLista.get(4).append(uJuvenil2.gastoComRacao(juvenil2.getDias()));
+        bufLista.get(5).append(uAdulto1.gastoComRacao(adulto1.getDias()));
+        bufLista.get(6).append(uAdulto2.gastoComRacao(adulto2.getDias()));
+        bufLista.get(7).append(uAdulto3.gastoComRacao(adulto3.getDias()));
+        bufLista.get(8).append(uAdulto4.gastoComRacao(adulto4.getDias()));
+        bufLista.get(9).append(uAdulto5.gastoComRacao(adulto5.getDias()));
+        bufLista.get(10).append(uAdulto6.gastoComRacao(adulto6.getDias()));
 
 
         //Saídas
-        System.out.print(larvaBuffer.toString());
-        System.out.println(alevino1Buffer.toString());
-        System.out.println(alevino2Buffer.toString());
-        System.out.println(juvenil1Buffer.toString());
-        System.out.println(juvenil2Buffer.toString());
-        System.out.println(adulto1Buffer.toString());
-        System.out.println(adulto2Buffer.toString());
-        System.out.println(adulto3Buffer.toString());
-        System.out.println(adulto4Buffer.toString());
-        System.out.println(adulto5Buffer.toString());
-        System.out.println(adulto6Buffer.toString());
+        System.out.print(bufLista.get(0).toString());
+        System.out.println(bufLista.get(1).toString());
+        System.out.println(bufLista.get(2).toString());
+        System.out.println(bufLista.get(3).toString());
+        System.out.println(bufLista.get(4).toString());
+        System.out.println(bufLista.get(5).toString());
+        System.out.println(bufLista.get(6).toString());
+        System.out.println(bufLista.get(7).toString());
+        System.out.println(bufLista.get(8).toString());
+        System.out.println(bufLista.get(9).toString());
+        System.out.println(bufLista.get(10).toString());
 
 
-        DecimalFormat dc = new DecimalFormat("R$##0.00");
+        DecimalFormat dc = new DecimalFormat("R$###,##0.00");
 
 
         Period p = Period.between(LocalDate.now(),LocalDate.now().plus(Util_Racao_Tempo.cicloTotalDeDias,ChronoUnit.DAYS));
-        System.out.println("p.getYears() = " + p.getYears());
-        System.out.println("p.getMonths() = " + p.getMonths());
-        System.out.println("p.getDays() = " + p.getDays());
-        System.out.println("Money : " + dc.format(Util_Racao_Tempo.investimentoAproximado));
+
+        System.out.println("Duração do ciclo_______");
+        System.out.println("Anos = " + p.getYears());
+        System.out.println("Meses = " + p.getMonths());
+        System.out.println("Dias = " + p.getDays());
+        System.out.println("Ração : " + dc.format(Util_Racao_Tempo.investimentoAproximado));
+
+        System.out.println("\nEstimativa de lucro:");
+        System.out.println("Peso Total: Kg" + qtdTilapias * 0.8);
+        double fileKgs = ((qtdTilapias * 0.8)/100) * 30;
+        System.out.println("Peso em filé: Kg" + fileKgs);
+
+        System.out.println("Total do ganho , considerando R$55.90/Kg");
+        System.out.println(dc.format(fileKgs * 55.90));
 
 
+    }
+
+    public static List<StringBuffer> buffers(){
+        List<StringBuffer> buffersList = new ArrayList<>();
+
+        //Buffers para as informações de cada fase
+        StringBuffer larvaBuffer = new StringBuffer();
+        StringBuffer alevino1Buffer = new StringBuffer();
+        StringBuffer alevino2Buffer = new StringBuffer();
+        StringBuffer juvenil1Buffer = new StringBuffer();
+        StringBuffer juvenil2Buffer = new StringBuffer();
+        StringBuffer adulto1Buffer = new StringBuffer();
+        StringBuffer adulto2Buffer = new StringBuffer();
+        StringBuffer adulto3Buffer = new StringBuffer();
+        StringBuffer adulto4Buffer = new StringBuffer();
+        StringBuffer adulto5Buffer = new StringBuffer();
+        StringBuffer adulto6Buffer = new StringBuffer();
+
+        buffersList.add(larvaBuffer);
+        buffersList.add(alevino1Buffer);
+        buffersList.add(alevino2Buffer);
+        buffersList.add(juvenil1Buffer);
+        buffersList.add(juvenil2Buffer);
+        buffersList.add(adulto1Buffer);
+        buffersList.add(adulto2Buffer);
+        buffersList.add(adulto3Buffer);
+        buffersList.add(adulto4Buffer);
+        buffersList.add(adulto5Buffer);
+        buffersList.add(adulto6Buffer);
+        return buffersList;
     }
 
 }

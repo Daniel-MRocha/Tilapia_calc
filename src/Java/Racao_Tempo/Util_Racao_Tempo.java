@@ -53,7 +53,7 @@ public class Util_Racao_Tempo {
 
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DecimalFormat dc = new DecimalFormat("R$##0.00");
+        DecimalFormat dc = new DecimalFormat("R$###,##0.00");
 
         StringBuffer resultado = new StringBuffer();
 
