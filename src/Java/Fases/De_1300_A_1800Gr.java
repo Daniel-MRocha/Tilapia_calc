@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class De_1300_A_1800Gr implements I_logicaDaFase{
+public class De_1300_A_1800Gr implements I_Fase {
 
     private final double pesoIni = 1.3;
     private final double porcentagemPv = 0.006;
@@ -16,11 +16,11 @@ public class De_1300_A_1800Gr implements I_logicaDaFase{
     private final String racaotipo = "Pellet de 6-8mm 28-32% de proteína bruta";
 
     DecimalFormat dc = new DecimalFormat("###,##0.000");
-
+    @Override
     public double getRacaoTotal() {
         return racaoTotal;
     }
-
+    @Override
     public int getDias() {
         return dias;
     }

@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class De_1_A_5Gr implements I_logicaDaFase{
+public class De_1_A_5Gr implements I_Fase {
 
     private final double pesoIni = 0.001;
     private final double porcentagemPv = 0.14;
@@ -17,10 +17,11 @@ public class De_1_A_5Gr implements I_logicaDaFase{
 
     DecimalFormat dc = new DecimalFormat("###,##0.000");
 
+    @Override
     public double getRacaoTotal() {
         return racaoTotal;
     }
-
+    @Override
     public int getDias() {
         return dias;
     }

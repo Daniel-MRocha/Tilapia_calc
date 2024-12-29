@@ -18,8 +18,10 @@ public class Tila_App {
         Dados dados = new Dados();
 
         int qtdTilapias = 0;
+        int qtdFases = 0;
 
         while (qtdTilapias==0) qtdTilapias = dados.qtdTilapias();
+        while (qtdFases < 1 || qtdFases > 11) qtdFases = dados.qtdFases();
 
 
         List<StringBuffer> bufLista = buffers();
@@ -142,6 +144,7 @@ public class Tila_App {
         buffersList.add(adulto4Buffer);
         buffersList.add(adulto5Buffer);
         buffersList.add(adulto6Buffer);
+
         return buffersList;
     }
 
