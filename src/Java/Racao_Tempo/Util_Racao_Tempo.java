@@ -20,12 +20,16 @@ public class Util_Racao_Tempo {
     private LocalDate dataInicioFase;
     private LocalDate dataFinalFase;
 
-    public Util_Racao_Tempo(String empresa,String tipo,double preco_Saca,int pesoCadaSaca,double pesoTotal,LocalDate dataInicioFase,int dias){
+    public Util_Racao_Tempo(String empresa,String tipo,double preco_Saca,int pesoCadaSaca,double pesoTotal){
         this.empresa = empresa;
         this.tipo= tipo;
         this.preco_Saca = preco_Saca;
         this.pesoCadaSaca = pesoCadaSaca;
         this.pesoTotal= pesoTotal;
+
+    }
+
+    public void setDatas(LocalDate inicioDaFase,int dias){
         this.dataInicioFase = dataInicioFase;
         this.dataFinalFase = dataInicioFase.plus(dias,ChronoUnit.DAYS);
     }
