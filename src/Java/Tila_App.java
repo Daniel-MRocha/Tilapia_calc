@@ -2,8 +2,7 @@ package Java;
 
 import Java.EntradaDados.Dados;
 import Java.Fases.*;
-import Java.Racao_Tempo.I_Racao;
-import Java.Racao_Tempo.Util_Racao_Tempo;
+import Java.Racao.Racao_Tempo;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -23,6 +22,13 @@ public class Tila_App {
 
         while (qtdTilapias==0) qtdTilapias = dados.qtdTilapias();
         while (qtdFases < 1 || qtdFases > 11) qtdFases = dados.qtdFases();
+
+        try {
+            var test = dados.factoryRacao();
+        }catch (Exception e){
+            System.out.println(e);
+            System.exit(1);
+        }
 
 
         List<StringBuffer> bufLista = buffers(qtdFases,qtdTilapias);
@@ -55,13 +61,13 @@ bufLista.forEach(System.out::println);
         DecimalFormat dc = new DecimalFormat("R$###,##0.00");
 
 
-        Period p = Period.between(LocalDate.now(),LocalDate.now().plus(Util_Racao_Tempo.cicloTotalDeDias,ChronoUnit.DAYS));
+        Period p = Period.between(LocalDate.now(),LocalDate.now().plus(Racao_Tempo.cicloTotalDeDias,ChronoUnit.DAYS));
 
         System.out.println("Duração do ciclo_______");
         System.out.println("Anos = " + p.getYears());
         System.out.println("Meses = " + p.getMonths());
         System.out.println("Dias = " + p.getDays());
-        System.out.println("Ração : " + dc.format(Util_Racao_Tempo.investimentoAproximado));
+        System.out.println("Ração : " + dc.format(Racao_Tempo.investimentoAproximado));
 
         System.out.println("\nEstimativa de lucro:");
         System.out.println("Peso Total: Kg" + qtdTilapias * 0.8);
