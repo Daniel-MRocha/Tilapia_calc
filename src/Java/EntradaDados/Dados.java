@@ -106,6 +106,7 @@ public class Dados {
             pesoCadaSaca = leitura.nextInt();
 
             Racao_Tempo racAux = new Racao_Tempo(empresa, tipo, precoDaSaca, pesoCadaSaca, value.toString());
+            Racao_Tempo.carregaRacaoPrecoPeso(racAux);
             listaRacoes.add(racAux);
             leitura.reset();
         }

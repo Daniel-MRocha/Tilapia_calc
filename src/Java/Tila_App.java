@@ -4,10 +4,7 @@ import Java.EntradaDados.Dados;
 import Java.Fases.*;
 import Java.Racao.Racao_Tempo;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,24 +33,36 @@ public class Tila_App {
         processamento(listaFases, listaRacao,qtdTilapias).stream().forEach(e-> System.out.println(e));
 
 
-        DecimalFormat dc = new DecimalFormat("R$###,##0.00");
+        System.out.println("Variaveis larva:");
+        System.out.println(Racao_Tempo.larvaRacao+ "\n"+Racao_Tempo.larvaRacaoPreco+ "\n"+Racao_Tempo.larvaPesoSaca);
 
+        System.out.println("Variaveis alevino:");
+        System.out.println(Racao_Tempo.alevinoRacao+ "\n"+Racao_Tempo.alevinoRacaoPreco+ "\n"+Racao_Tempo.alevinoPesoSaca);
 
-        Period p = Period.between(LocalDate.now(),LocalDate.now().plus(Racao_Tempo.cicloTotalDeDias,ChronoUnit.DAYS));
+        System.out.println("Variaveis juvenil:");
+        System.out.println(Racao_Tempo.juvenilRacao+ "\n"+Racao_Tempo.juvenilRacaoPreco+ "\n"+Racao_Tempo.juvenilPesoSaca);
 
-        System.out.println("Duração do ciclo_______");
-        System.out.println("Anos = " + p.getYears());
-        System.out.println("Meses = " + p.getMonths());
-        System.out.println("Dias = " + p.getDays());
-        System.out.println("Ração : " + dc.format(Racao_Tempo.investimentoAproximado));
+        System.out.println("Variaveis adulto:");
+        System.out.println(Racao_Tempo.adultoRacao+ "\n"+Racao_Tempo.adultoRacaoPreco+ "\n"+Racao_Tempo.adultoPesoSaca);
 
-        System.out.println("\nEstimativa de lucro:");
-        System.out.println("Peso Total: Kg" + qtdTilapias * 0.8);
-        double fileKgs = ((qtdTilapias * 0.8)/100) * 30;
-        System.out.println("Peso em filé: Kg" + fileKgs);
-
-        System.out.println("Total do ganho , considerando R$55.90/Kg");
-        System.out.println(dc.format(fileKgs * 55.90));
+//        DecimalFormat dc = new DecimalFormat("R$###,##0.00");
+//
+//
+//        Period p = Period.between(LocalDate.now(),LocalDate.now().plus(Racao_Tempo.cicloTotalDeDias,ChronoUnit.DAYS));
+//
+//        System.out.println("Duração do ciclo_______");
+//        System.out.println("Anos = " + p.getYears());
+//        System.out.println("Meses = " + p.getMonths());
+//        System.out.println("Dias = " + p.getDays());
+//        System.out.println("Ração : " + dc.format(Racao_Tempo.investimentoAproximado));
+//
+//        System.out.println("\nEstimativa de lucro:");
+//        System.out.println("Peso Total: Kg" + qtdTilapias * 0.8);
+//        double fileKgs = ((qtdTilapias * 0.8)/100) * 30;
+//        System.out.println("Peso em filé: Kg" + fileKgs);
+//
+//        System.out.println("Total do ganho , considerando R$55.90/Kg");
+//        System.out.println(dc.format(fileKgs * 55.90));
 
 
     }
@@ -101,7 +110,8 @@ public class Tila_App {
                 racao.get(0).setRacaoTipo("LARVA");
                 racao.get(0).setDatas(fases.get(count).getDias());
                 aux.append(racao.get(0).gastoComRacao(fases.get(count).getDias()));
-                Racao_Tempo.carregaConstantesRacao(racao.get(0));
+                Racao_Tempo.carregaRacaoPrecoPeso(racao.get(0));
+                racao.get(0).adicionaRacaoTotal(racao.get(0).getRacaoTipo(),fases.get(count));
                 buffer.get(count).append(aux);
                 aux.delete(0,aux.length());
             }
@@ -109,7 +119,8 @@ public class Tila_App {
                 racao.get(1).setRacaoTipo("ALEVINO");
                 racao.get(1).setDatas(fases.get(count).getDias());
                 aux.append(racao.get(1).gastoComRacao(fases.get(count).getDias()));
-                Racao_Tempo.carregaConstantesRacao(racao.get(1));
+                Racao_Tempo.carregaRacaoPrecoPeso(racao.get(1));
+                racao.get(1).adicionaRacaoTotal(racao.get(1).getRacaoTipo(),fases.get(count));
                 buffer.get(count).append(aux);
                 aux.delete(0,aux.length());
             }
@@ -117,7 +128,8 @@ public class Tila_App {
                 racao.get(2).setRacaoTipo("JUVENIL");
                 racao.get(2).setDatas(fases.get(count).getDias());
                 aux.append(racao.get(2).gastoComRacao(fases.get(count).getDias()));
-                Racao_Tempo.carregaConstantesRacao(racao.get(2));
+                Racao_Tempo.carregaRacaoPrecoPeso(racao.get(2));
+                racao.get(2).adicionaRacaoTotal(racao.get(2).getRacaoTipo(),fases.get(count));
                 buffer.get(count).append(aux);
                 aux.delete(0,aux.length());
             }
@@ -125,7 +137,8 @@ public class Tila_App {
                 racao.get(3).setRacaoTipo("ADULTO");
                 racao.get(3).setDatas(fases.get(count).getDias());
                 aux.append(racao.get(3).gastoComRacao(fases.get(count).getDias()));
-                Racao_Tempo.carregaConstantesRacao(racao.get(3));
+                Racao_Tempo.carregaRacaoPrecoPeso(racao.get(3));
+                racao.get(3).adicionaRacaoTotal(racao.get(3).getRacaoTipo(),fases.get(count));
                 buffer.get(count).append(aux);
                 aux.delete(0,aux.length());
             }

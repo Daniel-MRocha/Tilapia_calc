@@ -1,16 +1,19 @@
 package Java.Racao;
 
 
+import Java.Fases.I_Fase;
+
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 public class Racao_Tempo {
 
     //Variaveis estáticas
     public static int cicloTotalDeDias = 0;
-    public static double investimentoAproximado = 0.0;
+
 
     public static LocalDate dataInicio;
     public static LocalDate dataFim;
@@ -33,9 +36,7 @@ public class Racao_Tempo {
     private String empresa;
     private String tipo;
     private double preco_Saca;
-    private int sacas;
     private int pesoCadaSaca;
-    private double pesoTotal;
     private String racaoTipo;
     private LocalDate dataInicioFase;
     private LocalDate dataFinalFase;
@@ -76,10 +77,6 @@ public class Racao_Tempo {
         return racaoTipo;
     }
 
-    public void setPesoTotal(double pesoTotal) {
-        this.pesoTotal = pesoTotal;
-    }
-
     public StringBuffer gastoComRacao(int dias){
 
         cicloTotalDeDias = cicloTotalDeDias + dias;
@@ -94,12 +91,6 @@ public class Racao_Tempo {
         resultado.append("Empresa : "+ empresa + "\n");
         resultado.append("Tipo : "+ tipo + "\n");
         resultado.append("Preço/Saca : " + dc.format(preco_Saca) + "\n");
-
-        int sacasEstimadas = (int) ((pesoTotal%pesoCadaSaca==0)?pesoTotal/pesoCadaSaca:((pesoTotal/pesoCadaSaca)+1));
-        investimentoAproximado = investimentoAproximado + (preco_Saca * sacasEstimadas);
-
-        resultado.append("Sacas estimadas : " + sacasEstimadas + "\n");
-        resultado.append("Investimento nesta fase : " + dc.format(preco_Saca * sacasEstimadas ) +"\n");
         resultado.append("Data de ínicio da fase : " + dataInicioFase.format(dtf)+"\n");
         resultado.append("Data de final da fase : " + dataFinalFase.format(dtf)+"\n\n");
 
@@ -108,30 +99,44 @@ public class Racao_Tempo {
         return resultado;
     }
 
-    public static void carregaConstantesRacao(Racao_Tempo racao){
+    public static void carregaRacaoPrecoPeso(Racao_Tempo racao){
         switch (racao.getRacaoTipo()){
             case "LARVA":
                 larvaRacaoPreco = racao.preco_Saca;
                 larvaPesoSaca = racao.pesoCadaSaca;
-                larvaRacao += racao.pesoTotal;
                 break;
             case "ALEVINO":
                 alevinoRacaoPreco = racao.preco_Saca;
                 alevinoPesoSaca = racao.pesoCadaSaca;
-                alevinoRacao += racao.pesoTotal;
                 break;
             case "JUVENIL":
                 juvenilRacaoPreco = racao.preco_Saca;
                 juvenilPesoSaca = racao.pesoCadaSaca;
-                juvenilRacao += racao.pesoTotal;
                 break;
             case "ADULTO":
                 adultoRacaoPreco = racao.preco_Saca;
                 adultoPesoSaca = racao.pesoCadaSaca;
-                adultoRacao += racao.pesoTotal;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: ");
+        }
+    }
+    
+
+    public void adicionaRacaoTotal( String tipo, I_Fase fase){
+        switch (tipo){
+            case "LARVA":
+                Racao_Tempo.larvaRacao +=  fase.getRacaoTotal();
+                break;
+            case "ALEVINO":
+                Racao_Tempo.alevinoRacao += fase.getRacaoTotal() ;
+                break;
+            case "JUVENIL":
+                Racao_Tempo.juvenilRacao += fase.getRacaoTotal();
+                break;
+            case "ADULTO":
+                Racao_Tempo.adultoRacao += fase.getRacaoTotal();
+                break;
         }
     }
 }
