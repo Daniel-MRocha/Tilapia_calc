@@ -3,6 +3,8 @@ package Java.EntradaDados;
 import Java.Racao.Racao_Tipo;
 import Java.Racao.Racao_Tempo;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -16,7 +18,6 @@ public class Dados {
             Scanner leitura = new Scanner(System.in);
             System.out.print("Número de tilápias: ");
             int resultado = leitura.nextInt();
-            System.out.println("\n");
             return resultado;
 
         }catch (InputMismatchException e){
@@ -24,6 +25,23 @@ public class Dados {
             return 0;
         }
     }
+    public LocalDate inicioDoPlanejamento(){
+        Scanner leitura = new Scanner(System.in);
+        StringBuffer data = new StringBuffer();
+        try {
+            System.out.println("Data de ínicio do planejamento:");
+            System.out.print("Dia : ");
+            data.append(leitura.next()+"-");
+            System.out.print("Mês : ");
+            data.append(leitura.next()+"-");
+            System.out.print("Ano : ");
+            data.append(leitura.next());
+        }catch (Exception e){
+            System.out.println("Data invalida!!!");
+        }
+        return LocalDate.parse(data.toString(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
+
     public int qtdFases(){
     Scanner leitura = new Scanner(System.in);
     try {
@@ -55,7 +73,7 @@ public class Dados {
         return 0;
     }
 }
-    public List<Racao_Tempo> factoryRacao() throws Exception{
+    public List<Racao_Tempo> factoryRacao(){
 
         Scanner leitura = new Scanner(System.in);
         List<Racao_Tempo> listaRacoes = new ArrayList<>();
@@ -65,8 +83,8 @@ public class Dados {
         double precoDaSaca = 0.0;
         int pesoCadaSaca = 0;
 
-
         System.out.println("Cadastro de rações que serão utilizadas :");
+        try {
 
         for (Racao_Tipo value : Racao_Tipo.values()) {
             System.out.println("______________________");
@@ -77,7 +95,7 @@ public class Dados {
 
 
             System.out.print("Tipo : ");
-            tipo =  leitura.next();
+            tipo = leitura.next();
 
 
             System.out.print("Preço/Saca : ");
@@ -87,36 +105,15 @@ public class Dados {
             System.out.print("Peso/Saca : ");
             pesoCadaSaca = leitura.nextInt();
 
-
-
-             Racao_Tempo racAux = new Racao_Tempo(empresa,tipo,precoDaSaca,pesoCadaSaca,value.toString());
-             listaRacoes.add(racAux);
-             carregaConstantesRacao(value.toString(),precoDaSaca,pesoCadaSaca);
-             leitura.reset();
+            Racao_Tempo racAux = new Racao_Tempo(empresa, tipo, precoDaSaca, pesoCadaSaca, value.toString());
+            listaRacoes.add(racAux);
+            leitura.reset();
+        }
+        }catch (Exception e){
+            System.out.println(e);
         }
       return listaRacoes;
     }
-    public void carregaConstantesRacao(String fase,double preco, int peso){
-        switch (fase){
-            case "LARVA":
-                Racao_Tempo.larvaRacaoPreco = preco;
-                Racao_Tempo.larvaPesoSaca = peso;
-                break;
-            case "ALEVINO":
-                Racao_Tempo.alevinoRacaoPreco = preco;
-                Racao_Tempo.alevinoPesoSaca = peso;
-                break;
-            case "jUVENIL":
-                Racao_Tempo.juvenilRacaoPreco = preco;
-                Racao_Tempo.juvenilPesoSaca = peso;
-                break;
-            case "ADULTO":
-                Racao_Tempo.adultoRacaoPreco = preco;
-                Racao_Tempo.adultoPesoSaca = peso;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + fase);
-        }
-    }
+
 
 }

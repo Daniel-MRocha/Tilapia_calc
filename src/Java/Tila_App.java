@@ -21,41 +21,19 @@ public class Tila_App {
         int qtdFases = 0;
 
         while (qtdTilapias==0) qtdTilapias = dados.qtdTilapias();
+
+        LocalDate inicioDoPlanejamento = dados.inicioDoPlanejamento();
+        System.out.println("\n");
+        Racao_Tempo.dataInicio = inicioDoPlanejamento;
+
         while (qtdFases < 1 || qtdFases > 11) qtdFases = dados.qtdFases();
 
-        try {
-            var test = dados.factoryRacao();
-        }catch (Exception e){
-            System.out.println(e);
-            System.exit(1);
-        }
+        List<Racao_Tempo> listaRacao = dados.factoryRacao();
 
+        System.out.println("\n");
+        List<I_Fase> listaFases = fases(qtdFases);
 
-        List<StringBuffer> bufLista = buffers(qtdFases,qtdTilapias);
-
-
-
-
-
-
-//        //Instâncias com calculo de tempo e ração estimada
-//        Util_Racao_Tempo uLarva = new Util_Racao_Tempo("Mercado livre","pó com hormônio",132.5,2,larva.getRacaoTotal(), LocalDate.now(), larva.getDias());
-//        Util_Racao_Tempo uAlevino1 = new Util_Racao_Tempo("Supra alisul","42% , 1.7mm",349,25,alevino1.getRacaoTotal(),uLarva.getDataFinalFase(),alevino1.getDias());
-//        Util_Racao_Tempo uAlevino2 = new Util_Racao_Tempo("Supra alisul","42% , 1.7mm",349,25,alevino2.getRacaoTotal(),uAlevino1.getDataFinalFase(),alevino2.getDias());
-//        Util_Racao_Tempo uJuvenil1 = new Util_Racao_Tempo("Cocamar Aqua","32% 2-4mm",74.46,25,juvenil1.getRacaoTotal(),uAlevino2.getDataFinalFase(), juvenil1.getDias());
-//        Util_Racao_Tempo uJuvenil2 = new Util_Racao_Tempo("Cocamar Aqua","32% 2-4mm",74.46,25,juvenil2.getRacaoTotal(),uJuvenil1.getDataFinalFase(), juvenil2.getDias());
-//        Util_Racao_Tempo uAdulto1 = new Util_Racao_Tempo("Cocamar aqua rpx4","32% 6mm",74.14,25,adulto1.getRacaoTotal(),uJuvenil2.getDataFinalFase(),adulto1.getDias());
-//        Util_Racao_Tempo uAdulto2 = new Util_Racao_Tempo("Cocamar aqua rpx4","32% 6mm",74.14,25,adulto2.getRacaoTotal(),uAdulto1.getDataFinalFase(),adulto2.getDias());
-//        Util_Racao_Tempo uAdulto3 = new Util_Racao_Tempo("Cocamar aqua rpx4","32% 6mm",74.14,25,adulto3.getRacaoTotal(),uAdulto2.getDataFinalFase(),adulto3.getDias());
-//        Util_Racao_Tempo uAdulto4 = new Util_Racao_Tempo("Cocamar aqua rpx4","32% 6mm",74.14,25,adulto4.getRacaoTotal(),uAdulto3.getDataFinalFase(),adulto4.getDias());
-//        Util_Racao_Tempo uAdulto5 = new Util_Racao_Tempo("Cocamar aqua rpx4","32% 6mm",74.14,25,adulto5.getRacaoTotal(),uAdulto4.getDataFinalFase(),adulto5.getDias());
-//        Util_Racao_Tempo uAdulto6 = new Util_Racao_Tempo("Cocamar aqua rpx4","32% 6mm",74.14,25,adulto6.getRacaoTotal(),uAdulto5.getDataFinalFase(),adulto6.getDias());
-
-
-
-
-        //Saídas
-bufLista.forEach(System.out::println);
+        processamento(listaFases, listaRacao,qtdTilapias).stream().forEach(e-> System.out.println(e));
 
 
         DecimalFormat dc = new DecimalFormat("R$###,##0.00");
@@ -80,14 +58,7 @@ bufLista.forEach(System.out::println);
 
     }
 
-    public static List<StringBuffer> buffers(int qtdFases,int qtdTilapias){
-
-        List<StringBuffer> buffersList = new ArrayList<>();
-
-       for(int count = 0; count < qtdFases ; count++){
-           StringBuffer buffer = new StringBuffer();
-           buffersList.add(buffer);
-       }
+    public static List<I_Fase> fases(int qtdFases){
 
        List<I_Fase> listFase =new ArrayList<>();
         I_Fase larva = new De_1_A_5Gr();
@@ -114,10 +85,52 @@ bufLista.forEach(System.out::println);
         listFase.add(adulto5);
         listFase.add(adulto6);
 
-        for(int count = 0; count < qtdFases ; count++){
-            buffersList.get(count).append(listFase.get(count).calculo(qtdTilapias));
+
+            return listFase.subList(0,qtdFases);
+    }
+    public static List<StringBuffer> processamento(List<I_Fase> fases, List<Racao_Tempo> racao,int qtdTilapias){
+        List<StringBuffer> buffer = new ArrayList<>();
+        StringBuffer aux = new StringBuffer();
+
+        for (I_Fase fase : fases) {
+            buffer.add(fase.calculo(qtdTilapias));
         }
-            return buffersList;
+
+        for(int count = 0; count < fases.size();count++){
+            if(count==0){
+                racao.get(0).setRacaoTipo("LARVA");
+                racao.get(0).setDatas(fases.get(count).getDias());
+                aux.append(racao.get(0).gastoComRacao(fases.get(count).getDias()));
+                Racao_Tempo.carregaConstantesRacao(racao.get(0));
+                buffer.get(count).append(aux);
+                aux.delete(0,aux.length());
+            }
+            else if(count > 0 && count < 3){
+                racao.get(1).setRacaoTipo("ALEVINO");
+                racao.get(1).setDatas(fases.get(count).getDias());
+                aux.append(racao.get(1).gastoComRacao(fases.get(count).getDias()));
+                Racao_Tempo.carregaConstantesRacao(racao.get(1));
+                buffer.get(count).append(aux);
+                aux.delete(0,aux.length());
+            }
+            else if(count > 2 && count < 5){
+                racao.get(2).setRacaoTipo("JUVENIL");
+                racao.get(2).setDatas(fases.get(count).getDias());
+                aux.append(racao.get(2).gastoComRacao(fases.get(count).getDias()));
+                Racao_Tempo.carregaConstantesRacao(racao.get(2));
+                buffer.get(count).append(aux);
+                aux.delete(0,aux.length());
+            }
+            else{
+                racao.get(3).setRacaoTipo("ADULTO");
+                racao.get(3).setDatas(fases.get(count).getDias());
+                aux.append(racao.get(3).gastoComRacao(fases.get(count).getDias()));
+                Racao_Tempo.carregaConstantesRacao(racao.get(3));
+                buffer.get(count).append(aux);
+                aux.delete(0,aux.length());
+            }
+        }
+   return  buffer;
+        }
     }
 
-}

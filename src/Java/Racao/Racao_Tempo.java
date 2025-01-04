@@ -47,10 +47,13 @@ public class Racao_Tempo {
         this.pesoCadaSaca = pesoCadaSaca;
         this.racaoTipo = racaoTipo;
     }
-
     public void setDatas(int dias){
         this.dataInicioFase = dataInicio;
         this.dataFinalFase = dataInicioFase.plus(dias,ChronoUnit.DAYS);
+    }
+
+    public void setRacaoTipo(String tipo){
+        racaoTipo = tipo;
     }
 
     public String getEmpresa() {
@@ -103,5 +106,32 @@ public class Racao_Tempo {
         dataInicio = dataFinalFase;
 
         return resultado;
+    }
+
+    public static void carregaConstantesRacao(Racao_Tempo racao){
+        switch (racao.getRacaoTipo()){
+            case "LARVA":
+                larvaRacaoPreco = racao.preco_Saca;
+                larvaPesoSaca = racao.pesoCadaSaca;
+                larvaRacao += racao.pesoTotal;
+                break;
+            case "ALEVINO":
+                alevinoRacaoPreco = racao.preco_Saca;
+                alevinoPesoSaca = racao.pesoCadaSaca;
+                alevinoRacao += racao.pesoTotal;
+                break;
+            case "JUVENIL":
+                juvenilRacaoPreco = racao.preco_Saca;
+                juvenilPesoSaca = racao.pesoCadaSaca;
+                juvenilRacao += racao.pesoTotal;
+                break;
+            case "ADULTO":
+                adultoRacaoPreco = racao.preco_Saca;
+                adultoPesoSaca = racao.pesoCadaSaca;
+                adultoRacao += racao.pesoTotal;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: ");
+        }
     }
 }
