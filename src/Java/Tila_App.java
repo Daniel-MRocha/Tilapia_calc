@@ -4,7 +4,10 @@ import Java.EntradaDados.Dados;
 import Java.Fases.*;
 import Java.Racao.Racao_Tempo;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,43 +33,76 @@ public class Tila_App {
         System.out.println("\n");
         List<I_Fase> listaFases = fases(qtdFases);
 
-        processamento(listaFases, listaRacao,qtdTilapias).stream().forEach(e-> System.out.println(e));
+        processamento(listaFases, listaRacao,qtdTilapias)
+                .stream()
+                .forEach(e-> System.out.println(e));
 
-
-        System.out.println("Variaveis larva:");
-        System.out.println(Racao_Tempo.larvaRacao+ "\n"+Racao_Tempo.larvaRacaoPreco+ "\n"+Racao_Tempo.larvaPesoSaca);
-
-        System.out.println("Variaveis alevino:");
-        System.out.println(Racao_Tempo.alevinoRacao+ "\n"+Racao_Tempo.alevinoRacaoPreco+ "\n"+Racao_Tempo.alevinoPesoSaca);
-
-        System.out.println("Variaveis juvenil:");
-        System.out.println(Racao_Tempo.juvenilRacao+ "\n"+Racao_Tempo.juvenilRacaoPreco+ "\n"+Racao_Tempo.juvenilPesoSaca);
-
-        System.out.println("Variaveis adulto:");
-        System.out.println(Racao_Tempo.adultoRacao+ "\n"+Racao_Tempo.adultoRacaoPreco+ "\n"+Racao_Tempo.adultoPesoSaca);
-
-//        DecimalFormat dc = new DecimalFormat("R$###,##0.00");
-//
-//
-//        Period p = Period.between(LocalDate.now(),LocalDate.now().plus(Racao_Tempo.cicloTotalDeDias,ChronoUnit.DAYS));
-//
-//        System.out.println("Duração do ciclo_______");
-//        System.out.println("Anos = " + p.getYears());
-//        System.out.println("Meses = " + p.getMonths());
-//        System.out.println("Dias = " + p.getDays());
-//        System.out.println("Ração : " + dc.format(Racao_Tempo.investimentoAproximado));
-//
-//        System.out.println("\nEstimativa de lucro:");
-//        System.out.println("Peso Total: Kg" + qtdTilapias * 0.8);
-//        double fileKgs = ((qtdTilapias * 0.8)/100) * 30;
-//        System.out.println("Peso em filé: Kg" + fileKgs);
-//
-//        System.out.println("Total do ganho , considerando R$55.90/Kg");
-//        System.out.println(dc.format(fileKgs * 55.90));
-
+        painelDeDados(inicioDoPlanejamento,qtdTilapias,qtdFases);
 
     }
+    public static void painelDeDados(LocalDate dataInicio, int qtdTilapias,int fases){
 
+        double kilos = 0.0;
+
+       //Set kilos dependendo da fase escolhida
+        switch (fases){
+           case 1:
+               kilos = qtdTilapias * 0.005;
+               break;
+           case 2:
+               kilos = qtdTilapias * 0.01;
+               break;
+           case 3:
+               kilos = qtdTilapias * 0.02;
+               break;
+           case 4:
+               kilos = qtdTilapias * 0.05;
+               break;
+           case 5:
+               kilos = qtdTilapias * 0.15;
+               break;
+           case 6:
+               kilos = qtdTilapias * 0.25;
+               break;
+           case 7:
+               kilos = qtdTilapias * 0.4;
+               break;
+           case 8:
+               kilos = qtdTilapias * 0.6;
+               break;
+           case 9:
+               kilos = qtdTilapias * 0.8;
+               break;
+           case 10:
+               kilos = qtdTilapias * 1.3;
+               break;
+           case 11:
+               kilos = qtdTilapias * 1.8;
+               break;
+       }
+
+        DecimalFormat dinheiroFormat = new DecimalFormat("R$ ###,##0.00");
+        DecimalFormat pesoFormat =new DecimalFormat("Kg ###,##0.00");
+
+
+        Period p = Period.between(dataInicio,dataInicio.plus(Racao_Tempo.cicloTotalDeDias, ChronoUnit.DAYS));
+
+        System.out.println("Duração do ciclo_______");
+        System.out.println("Anos = " + p.getYears());
+        System.out.println("Meses = " + p.getMonths());
+        System.out.println("Dias = " + p.getDays());
+
+        System.out.println(investimento().toString());
+
+
+        System.out.println("\nEstimativa de lucro:");
+        System.out.println("Peso Total : " + pesoFormat.format(kilos));
+        double fileKgs = (kilos/100) * 30;
+        System.out.println("Peso em filé : " + pesoFormat.format(fileKgs));
+
+        System.out.println("Total do ganho , considerando R$55.90/Kg");
+        System.out.println(dinheiroFormat.format(fileKgs * 55.90));
+    }
     public static List<I_Fase> fases(int qtdFases){
 
        List<I_Fase> listFase =new ArrayList<>();
@@ -145,5 +181,71 @@ public class Tila_App {
         }
    return  buffer;
         }
+    public static StringBuffer investimento(){
+
+        StringBuffer result = new StringBuffer();
+
+        DecimalFormat dinheiroFormat = new DecimalFormat("R$ ###,##0.##");
+        DecimalFormat pesoFormat =new DecimalFormat("Kg ###,##0.##");
+
+        int sacasLarva = (int) ((Racao_Tempo.larvaRacao%Racao_Tempo.larvaPesoSaca == 0)
+                ?(Racao_Tempo.larvaRacao/Racao_Tempo.larvaPesoSaca)
+                :(Racao_Tempo.larvaRacao/Racao_Tempo.larvaPesoSaca) +1);
+
+        int sacasAlevino = (int) ((Racao_Tempo.alevinoRacao%Racao_Tempo.alevinoPesoSaca == 0)
+                ?(Racao_Tempo.alevinoRacao/Racao_Tempo.alevinoPesoSaca)
+                :(Racao_Tempo.alevinoRacao/Racao_Tempo.alevinoPesoSaca) +1);
+
+        int sacasJuvenil = (int) ((Racao_Tempo.juvenilRacao%Racao_Tempo.juvenilPesoSaca == 0)
+                ?(Racao_Tempo.juvenilRacao/Racao_Tempo.juvenilPesoSaca)
+                :(Racao_Tempo.juvenilRacao/Racao_Tempo.juvenilPesoSaca) +1);
+
+        int sacasAdulto = (int) ((Racao_Tempo.adultoRacao%Racao_Tempo.adultoPesoSaca == 0)
+                ?(Racao_Tempo.adultoRacao/Racao_Tempo.adultoPesoSaca)
+                :(Racao_Tempo.adultoRacao/Racao_Tempo.adultoPesoSaca) +1);
+
+        double larvaInvestimento = Racao_Tempo.larvaRacaoPreco * sacasLarva;
+        double alevinoInvestimento = Racao_Tempo.alevinoRacaoPreco * sacasAlevino;
+        double juvenilInvestimento = Racao_Tempo.juvenilRacaoPreco * sacasJuvenil;
+        double adultoInvestimento = Racao_Tempo.adultoRacaoPreco * sacasAdulto;
+
+        //Carregamento do buffer de resultado com os processamentos
+        result.append("\nInvestimento");
+
+        result.append("\nLarva:");
+        result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.larvaRacao));
+        result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.larvaPesoSaca));
+        result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.larvaRacaoPreco));
+        result.append("\nSacas necessárias : ").append(sacasLarva);
+        result.append("\nValor : ").append(dinheiroFormat.format(larvaInvestimento));
+
+        result.append("\nAlevino:");
+        result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.alevinoRacao));
+        result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.alevinoPesoSaca));
+        result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.alevinoRacaoPreco));
+        result.append("\nSacas necessárias : ").append(sacasAlevino);
+        result.append("\nValor : ").append(dinheiroFormat.format(alevinoInvestimento));
+
+        result.append("\nJuvenil:");
+        result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.juvenilRacao));
+        result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.juvenilPesoSaca));
+        result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.juvenilRacaoPreco));
+        result.append("\nSacas necessárias : ").append(sacasJuvenil);
+        result.append("\nValor : ").append(dinheiroFormat.format(juvenilInvestimento));
+
+        result.append("\nAdulto:");
+        result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.adultoRacao));
+        result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.adultoPesoSaca));
+        result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.adultoRacaoPreco));
+        result.append("\nSacas necessárias : ").append(sacasAdulto);
+        result.append("\nValor : ").append(dinheiroFormat.format(adultoInvestimento));
+
+        result.append("\n*****Investimento*****\n");
+        result.append(dinheiroFormat.format((larvaInvestimento + alevinoInvestimento + juvenilInvestimento+adultoInvestimento)));
+        result.append("\n");
+
+        return result;
     }
+    }
+
 
