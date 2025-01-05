@@ -25,11 +25,9 @@ public class De_1_A_5Gr implements I_Fase {
     public int getDias() {
         return dias;
     }
-
     public String getRacaotipo() {
         return racaotipo;
     }
-
     @Override
     public StringBuffer calculo(int qtdTilapias) {
         StringBuffer resultado = new StringBuffer();

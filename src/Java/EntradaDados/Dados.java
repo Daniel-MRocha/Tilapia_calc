@@ -41,7 +41,6 @@ public class Dados {
         }
         return LocalDate.parse(data.toString(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
-
     public int qtdFases(){
     Scanner leitura = new Scanner(System.in);
     try {
@@ -115,6 +114,4 @@ public class Dados {
         }
       return listaRacoes;
     }
-
-
 }

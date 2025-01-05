@@ -133,7 +133,7 @@ public class Tila_App {
 
             return listFase.subList(0,qtdFases);
     }
-    public static List<StringBuffer> processamento(List<I_Fase> fases, List<Racao_Tempo> racao,int qtdTilapias){
+    public static List<StringBuffer> processamento(List<I_Fase> fases, List<Racao_Tempo> racao, int qtdTilapias){
         List<StringBuffer> buffer = new ArrayList<>();
         StringBuffer aux = new StringBuffer();
 
@@ -210,39 +210,42 @@ public class Tila_App {
         double adultoInvestimento = Racao_Tempo.adultoRacaoPreco * sacasAdulto;
 
         //Carregamento do buffer de resultado com os processamentos
-        result.append("\nInvestimento");
 
-        result.append("\nLarva:");
+        result.append("\n__________________");
+        result.append("\nInvestimento");
+        result.append("\n------------------");
+
+        result.append("\n\nLarva:");
         result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.larvaRacao));
         result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.larvaPesoSaca));
         result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.larvaRacaoPreco));
         result.append("\nSacas necessárias : ").append(sacasLarva);
         result.append("\nValor : ").append(dinheiroFormat.format(larvaInvestimento));
 
-        result.append("\nAlevino:");
+        result.append("\n\nAlevino:");
         result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.alevinoRacao));
         result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.alevinoPesoSaca));
         result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.alevinoRacaoPreco));
         result.append("\nSacas necessárias : ").append(sacasAlevino);
         result.append("\nValor : ").append(dinheiroFormat.format(alevinoInvestimento));
 
-        result.append("\nJuvenil:");
+        result.append("\n\nJuvenil:");
         result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.juvenilRacao));
         result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.juvenilPesoSaca));
         result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.juvenilRacaoPreco));
         result.append("\nSacas necessárias : ").append(sacasJuvenil);
         result.append("\nValor : ").append(dinheiroFormat.format(juvenilInvestimento));
 
-        result.append("\nAdulto:");
+        result.append("\n\nAdulto:");
         result.append("\nTotal de ração : ").append(pesoFormat.format(Racao_Tempo.adultoRacao));
         result.append("\nPeso/saca : ").append(pesoFormat.format(Racao_Tempo.adultoPesoSaca));
         result.append("\nPreço/saca : ").append(dinheiroFormat.format(Racao_Tempo.adultoRacaoPreco));
         result.append("\nSacas necessárias : ").append(sacasAdulto);
         result.append("\nValor : ").append(dinheiroFormat.format(adultoInvestimento));
 
-        result.append("\n*****Investimento*****\n");
+        result.append("\n\n*****Investimento*****\n");
         result.append(dinheiroFormat.format((larvaInvestimento + alevinoInvestimento + juvenilInvestimento+adultoInvestimento)));
-        result.append("\n");
+        result.append("\n\n");
 
         return result;
     }
