@@ -181,7 +181,7 @@ public class Tila_App {
         }
    return  buffer;
         }
-    public static StringBuffer investimento(){
+    public static StringBuffer investimento()   {
 
         StringBuffer result = new StringBuffer();
 
